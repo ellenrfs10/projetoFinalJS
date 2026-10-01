@@ -195,3 +195,24 @@ header {
         transition: none;
     }
 }
+
+.pedido-sos p{
+    margin:0;
+    max-width: 24rem;
+    color: var(--text-soft);
+    font-size: 0.9375rem;
+}
+
+.alarme-opcao{
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 44px;
+    font-size: 0.9375rem;
+}
+
+.alarme-opcao input {
+    width: 1.375rem;
+    height: 1.375rem;
+    accent-color: var(--violet);
+}
