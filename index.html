@@ -35,22 +35,36 @@
             <section class="pedido-sos">
                 <button id="botao-sos" class="botao-sos" type="button" data-state="idle" aria-label="Pedir ajuda SOS">
                     
-                    <span class="botao-sos__texto">SOS</span>
+                    <span class="botao-sos__texto">HELP</span>
+                    <span class="botao-sos__sub">Tocar para acionar</span>
+
                 </button>
                 <p id="estado-sos" role="status" aria-live="polite">
-                    O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de 10 km
+                    O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de <strong>10 km.</strong> 
                 </p>
+                
                 <label class="alarme-opcao">
                     <input type="checkbox" id="alarme-toggle">
                     Alarme sonoro ao acionar
                 </label>
             </section>
 
-            <section>
+            <section class="recursos">
                 <h2 class="titulo-2">Recursos Rápidos de Segurança</h2>
-                <a class="button-ligar" href="tel:112">Ligar 112</a>
-                <button type="button" class="button-gravar-audio">Gravar Áudio</button>
-                <button type="button" class="partilhar-rota">Partilhar Rota</button>
+                <div class="recursos__lista">
+                    <a class="recurso" href="tel:112">
+                        <span class="recurso__icone" aria-hidden="true">📞</span>
+                        Ligar 112
+                    </a>
+                    <button type="button" class="recurso">
+                        <span class="recurso__icone" aria-hidden="true">🎙️</span>
+                        Gravar Áudio
+                    </button>
+                    <button type="button" class="recurso">
+                        <span class="recurso__icone" aria-hidden="true">📍</span>
+                        Partilhar Rota
+                    </button>
+                </div>
             </section>
 
             <section>
