@@ -1,77 +1,74 @@
 <!DOCTYPE html>
-<html lang="PT-pt">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOS Mulheres</title>
+    <title>SOS Mulher</title>
     <link rel="stylesheet" href="css/style.css">
     <script type="module" src="js/main.js"></script>
 </head>
 <body>
     <header>
-        <nav id="gps-header" class="titulo-header">
+        <div id="gps-header" class="titulo-header">
             <span class="icone-sos-blue">
-                <img src="iconesos.jpg" alt="icone-SOS">
+                <img src="iconesos.jpg" alt="">
             </span>
             <h1>SOS Mulher</h1>
-            <span class="badge-green"></span>
+            <span class="badge-green" aria-hidden="true"></span>
             <p class="gps-letter">GPS Ativo (Raio 10km)</p>
-            <button type="button" class="capsula"> x Saída Rápida</button>
-        </nav>
-
+            <button type="button" class="capsula">x Saída Rápida</button>
+        </div>
     </header>
 
     <main>
-        <section id="abas-ajuda-ajudar">
-            <span class="capsula-grande">
-            <button id="pedir-ajuda" class="pedir-ajuda"> Quero Pedir Ajuda</button>
-            <button id="quero-ajudar" class="quero-ajuda"> Quero dar ajuda</button>
-            </span>
-            <button class="rede-protetora">
-                <h2 class="rede-protetora-titulo"> Rede Protetora Conectada</h2>
-                <p> Há 42 protetoras & voluntárias ativas no seu raio</p>
-            </button>
+        <!-- Aba 1: Quero pedir ajuda -->
+        <section id="painel-pedir">
+            <div class="rede-protetora">
+                <h2 class="rede-protetora-titulo">Rede Protetora Conectada</h2>
+                <p>Há 42 protetoras e voluntárias ativas no seu raio</p>
+            </div>
 
             <section class="pedido-sos">
-                <button id="botao-sos" class="pedido-sos">
-                    <link rel="stylesheet"  type="image/jpg" href="iconesos.jpg">
-                    
+                <button id="botao-sos" class="botao-sos" type="button" data-state="idle" aria-label="Pedir ajuda SOS">
+                    <img src="iconesos.jpg" alt="">
+                    <span class="botao-sos__texto">SOS</span>
                 </button>
-                <p>O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de 10 km</p>
-                
+                <p id="estado-sos" role="status" aria-live="polite">
+                    O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de 10 km
+                </p>
+                <label class="alarme-opcao">
+                    <input type="checkbox" id="alarme-toggle">
+                    Alarme sonoro ao acionar
+                </label>
             </section>
 
             <section>
-                <h2 class="titulo-2"> Recursos Rápidos de Segurança</h2>
-                <button class="button-ligar"> Ligar 112</button>
-                <button class="button-gravar-audio"> Gravar Audio</button>
-                <button class="partilhar-rota"> Partilhar Rota</button>
-
-                <h2> Guia de Estado de Botão</h2>
-                <p>Teste manualmente cada fase da experiência </p>
-                <span class="cpasula-default"></span>
-                <button id="cpasula-default">1 - Default</button>
-                <span class="cpasula-localizacao">2 - Gravar Audio</span>
-                <button id="cpasula-default">3 - localizacao</button>
-                <button id="cpasula-default">4 - Ativar som SOS do Botão</button>
+                <h2 class="titulo-2">Recursos Rápidos de Segurança</h2>
+                <a class="button-ligar" href="tel:112">Ligar 112</a>
+                <button type="button" class="button-gravar-audio">Gravar Áudio</button>
+                <button type="button" class="partilhar-rota">Partilhar Rota</button>
             </section>
 
-            <footer id="footer" class="capsula-grande">
-                 
-                <button id="pedir-ajuda" class="pedir-ajuda"> Quero Pedir Ajuda</button>
-                <button id="quero-ajudar" class="quero-ajuda"> Quero dar ajuda</button>
-                    
-
-            </footer>
-
-
-
+            <section>
+                <h2>Guia de Estados do Botão</h2>
+                <p>Testa manualmente cada fase da experiência</p>
+                <div class="guia-estados">
+                    <button type="button" data-estado="idle">1 - Default</button>
+                    <button type="button" data-estado="locating">2 - A localizar</button>
+                    <button type="button" data-estado="sent">3 - Enviado</button>
+                </div>
+            </section>
         </section>
 
-
-
-
+        <!-- Aba 2: Quero dar ajuda (escondida por agora) -->
+        <section id="painel-ajudar" hidden>
+            <p>Em breve: alertas perto de ti.</p>
+        </section>
     </main>
-    
+
+    <nav class="abas" role="tablist" aria-label="Perfil">
+        <button type="button" class="aba" role="tab" aria-selected="true" data-panel="painel-pedir">Quero pedir ajuda</button>
+        <button type="button" class="aba" role="tab" aria-selected="false" data-panel="painel-ajudar">Quero dar ajuda</button>
+    </nav>
 </body>
 </html>
