@@ -93,3 +93,28 @@ header {
     border-radius: 999px;
     cursor: pointer;
 }
+
+.abas{
+    position: fixed;
+    inset:auto 0 0 0;
+    height: var(--abas-h);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+}
+
+.aba{
+    border: 0;
+    background: transparent;
+    font: inherit;
+    font-weight: 700;
+    color: var(--text-soft);
+    cursor: pointer;
+    border-top: 4px solid transparent;
+}
+.aba[aria-selected="true"] {
+    color: var(--link);
+    background: var(--mist);
+    border-top-color: var(--violet);
+}
