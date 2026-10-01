@@ -150,3 +150,48 @@ header {
     -webkit-tap-highlight-color: transparent;
 }
 
+.botao-sos:hover{
+    background: var(--panic-dark);
+}
+
+.botao-sos:active{
+    transform:scale(0.96);
+}
+
+.botao-sos[data-state="locating"]{
+    background: var(--violet);
+    font-size: 1.25rem;
+    cursor: progress;
+    box-shadow: 0 0 0 10px rgba(91, 75, 138, 0.18), 0 10px 24px rgba(30, 33, 64, 0.2);
+    animation: respirar 1.8s ease-in-out infinite ;
+}
+
+.botao-sos[data-state="sent"]{
+    background: var(--green);
+    font-size: 1.5rem;
+    cursor: default;
+    box-shadow: 0 0 0 10px rgba(31, 122, 90, 0.18), 0 10px 24px rgba(30, 33, 64, 0.2);
+}
+
+.botao-sos[data-state="error"]{
+    background: var(--panic-dark);
+    font-size: 1.5rem;
+}
+
+.botao-sos:disabled {
+    opacity: 0.95;
+}
+
+@keyframes respirar {
+    50% {
+        box-shadow: 0 0 0 22px rgba(91, 75, 138, 0.08), 0 10px 24px rgba(30, 33, 64, 0.2);
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce){
+    .botao-sos{
+        animation: none !important;
+        transition: none;
+    }
+}
