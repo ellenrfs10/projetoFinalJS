@@ -229,14 +229,21 @@ header {
     gap: 0.375rem;
 }
 
+.rede-protetora {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem 1.125rem;
+}
+
 .rede-protetora-titulo{
     margin: 0 0 0.25rem;
-    font-size: 1.125;
+    font-size: 1.125rem;
 }
 
 .rede-protetora p {
     margin: 0;
-    font-size: 0.9375 rem;
+    font-size: 0.9375rem;
     color: var(--text-soft);
 }
 
@@ -256,7 +263,7 @@ header {
 
 .recursos__lista {
     display: grid;
-    grid-template-columns: repeat(3.1fr);
+    grid-template-columns: repeat(3,1fr);
     gap: 0.625rem
 }
 
@@ -279,7 +286,7 @@ header {
     cursor: pointer;
 }
 
-.reurso__icone{
+.recurso__icone{
     display: grid;
     place-items: center;
     width: 2.5rem;
@@ -288,4 +295,29 @@ header {
     background: var(--mist);
     font-size: 1.25rem;
 
+}
+
+@media(min-width: 768px) {
+    body{
+        padding-bottom: 0;
+        padding-top: var(--abas-h);
+    }
+
+    .abas{
+        inset: 0 0 auto 0;
+        height: var(--abas-h);
+        padding-bottom: 0;
+        border-top: 0;
+        border-bottom: 1px solid var(--line);
+        z-index: 2;
+    }
+
+    .aba{
+        border-top: 0;
+        border-bottom: 4px solid transparent;
+    }
+
+    .aba[aria-selected="true"]{
+        border-bottom-color: var(--violet);
+    }
 }
