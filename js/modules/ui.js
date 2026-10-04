@@ -25,22 +25,59 @@ const ESTADOS = {
     }
 };
 
-const botao = document.querySelector("#botao-sos");
-const texto = document.querySelector(".botao-sos__texto");
-const sub = document.querySelector(".botao-sos__sub");
-const mensagem = document.querySelector("#estado-sos");
-
+/**
+ * Atualiza o estado visual do botão e a mensagem do SOS.
+ * @param {string} estado - Nome do estado ('idle', 'locating', 'sent', 'error')
+ * @param {string} [detalhe=""] - Mensagem personalizada opcional
+ */
 export function renderState(estado, detalhe = "") {
-    const config = ESTADOS[estado];
+    const botao = document.querySelector("#botao-sos");
+    const texto = document.querySelector(".botao-sos__texto");
+    const sub = document.querySelector(".botao-sos__sub");
+    const mensagem = document.querySelector("#estado-sos");
 
-    botao.dataset.state = estado;
-    texto.textContent = config.titulo;
-    sub.textContent = config.sub;
-    botao.disabled = config.desativado;
+    const config = ESTADOS[estado] || ESTADOS.idle;
 
-    if (detalhe) {
-        mensagem.textContent = detalhe;
-    } else {
-        mensagem.innerHTML = config.mensagem;
+    if (botao) {
+        botao.dataset.state = estado;
+        botao.disabled = config.desativado;
     }
+
+    if (texto) {
+        texto.textContent = config.titulo;
+    }
+
+    if (sub) {
+        sub.textContent = config.sub;
+    }
+
+    if (mensagem) {
+        if (detalhe) {
+            mensagem.textContent = detalhe;
+        } else {
+            mensagem.innerHTML = config.mensagem;
+        }
+    }
+}
+
+/**
+ * Gestão de alternância entre as abas principais (Pedir / Dar ajuda)
+ * @param {string} targetPanelId - ID da secção a exibir
+ */
+export function switchTab(targetPanelId) {
+    const abas = document.querySelectorAll(".aba");
+    const paineis = document.querySelectorAll("main > section");
+
+    paineis.forEach((painel) => {
+        if (painel.id === targetPanelId) {
+            painel.removeAttribute("hidden");
+        } else {
+            painel.setAttribute("hidden", "true");
+        }
+    });
+
+    abas.forEach((btn) => {
+        const isSelected = btn.dataset.panel === targetPanelId;
+        btn.setAttribute("aria-selected", isSelected ? "true" : "false");
+    });
 }
