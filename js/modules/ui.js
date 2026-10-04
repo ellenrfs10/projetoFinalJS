@@ -52,11 +52,8 @@ export function renderState(estado, detalhe = "") {
     }
 
     if (mensagem) {
-        if (detalhe) {
-            mensagem.textContent = detalhe;
-        } else {
-            mensagem.innerHTML = config.mensagem;
-        }
+        // Usa innerHTML em ambos os casos para processar formatação como <strong>
+        mensagem.innerHTML = detalhe || config.mensagem;
     }
 }
 
@@ -66,7 +63,8 @@ export function renderState(estado, detalhe = "") {
  */
 export function switchTab(targetPanelId) {
     const abas = document.querySelectorAll(".aba");
-    const paineis = document.querySelectorAll("main > section");
+    // Seleciona apenas os painéis principais de navegação
+    const paineis = document.querySelectorAll("main > section[id^='painel-']");
 
     paineis.forEach((painel) => {
         if (painel.id === targetPanelId) {

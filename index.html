@@ -24,69 +24,67 @@
     </div>
 </header>
 
-    <main>
-        <!-- Aba 1: Quero pedir ajuda -->
-        <section id="painel-pedir">
-            <div class="rede-protetora">
-                <h2 class="rede-protetora-titulo">Rede Protetora Conectada</h2>
-                <p>Há 42 protetoras e voluntárias ativas no seu raio</p>
-            </div>
+<main>
+    <!-- Aba 1: Quero pedir ajuda -->
+    <section id="painel-pedir">
+        <div class="rede-protetora">
+            <h2 class="rede-protetora-titulo">Rede Protetora Conectada</h2>
+            <p>Há 42 protetoras e voluntárias ativas no seu raio</p>
+        </div>
 
-            <section class="pedido-sos">
-                <button id="botao-sos" class="botao-sos" type="button" data-state="idle" aria-label="Pedir ajuda SOS">
-                    
-                    <span class="botao-sos__texto">HELP</span>
-                    <span class="botao-sos__sub">Tocar para acionar</span>
+        <div class="pedido-sos">
+            <button id="botao-sos" class="botao-sos" type="button" data-state="idle" aria-label="Pedir ajuda SOS">
+                <span class="botao-sos__texto">HELP</span>
+                <span class="botao-sos__sub">Tocar para acionar</span>
+            </button>
+            <p id="estado-sos" role="status" aria-live="polite">
+                O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de <strong>10 km.</strong> 
+            </p>
+            
+            <label class="alarme-opcao">
+                <input type="checkbox" id="alarme-toggle">
+                Alarme sonoro ao acionar
+            </label>
+        </div>
 
+        <div class="recursos">
+            <h2 class="titulo-2">Recursos Rápidos de Segurança</h2>
+            <div class="recursos__lista">
+                <a class="recurso" href="tel:112">
+                    <span class="recurso__icone" aria-hidden="true">📞</span>
+                    Ligar 112
+                </a>
+                <button type="button" class="recurso">
+                    <span class="recurso__icone" aria-hidden="true">🎙️</span>
+                    Gravar Áudio
                 </button>
-                <p id="estado-sos" role="status" aria-live="polite">
-                    O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de <strong>10 km.</strong> 
-                </p>
-                
-                <label class="alarme-opcao">
-                    <input type="checkbox" id="alarme-toggle">
-                    Alarme sonoro ao acionar
-                </label>
-            </section>
+                <button type="button" class="recurso">
+                    <span class="recurso__icone" aria-hidden="true">📍</span>
+                    Partilhar Rota
+                </button>
+            </div>
+        </div>
 
-            <section class="recursos">
-                <h2 class="titulo-2">Recursos Rápidos de Segurança</h2>
-                <div class="recursos__lista">
-                    <a class="recurso" href="tel:112">
-                        <span class="recurso__icone" aria-hidden="true">📞</span>
-                        Ligar 112
-                    </a>
-                    <button type="button" class="recurso">
-                        <span class="recurso__icone" aria-hidden="true">🎙️</span>
-                        Gravar Áudio
-                    </button>
-                    <button type="button" class="recurso">
-                        <span class="recurso__icone" aria-hidden="true">📍</span>
-                        Partilhar Rota
-                    </button>
-                </div>
-            </section>
+        <div class="guia-container">
+            <h2>Guia de Estados do Botão</h2>
+            <p>Testa manualmente cada fase da experiência</p>
+            <div class="guia-estados">
+                <button type="button" data-estado="idle">1 - Default</button>
+                <button type="button" data-estado="locating">2 - A localizar</button>
+                <button type="button" data-estado="sent">3 - Enviado</button>
+            </div>
+        </div>
+    </section>
 
-           
-                <h2>Guia de Estados do Botão</h2>
-                <p>Testa manualmente cada fase da experiência</p>
-                <div class="guia-estados">
-                    <button type="button" data-estado="idle">1 - Default</button>
-                    <button type="button" data-estado="locating">2 - A localizar</button>
-                    <button type="button" data-estado="sent">3 - Enviado</button>
-                </div>
-            </section>
-        </section>
+    <!-- Aba 2: Quero dar ajuda -->
+    <section id="painel-ajudar" hidden>
+        <p>Em breve: alertas perto de ti.</p>
+    </section>
+</main>
 
-        <!-- Aba 2: Quero dar ajuda (escondida por agora) -->
-        <section id="painel-ajudar" hidden>
-            <p>Em breve: alertas perto de ti.</p>
-        </section>
-    </main>
-
-    <nav class="abas" role="tablist" aria-label="Perfil">
-        <button type="button" class="aba" role="tab" aria-selected="true" data-panel="painel-pedir">Quero pedir ajuda</button>
-        <button type="button" class="aba" role="tab" aria-selected="false" data-panel="painel-ajudar">Quero dar ajuda</button>
-    </nav>
+<nav class="abas" role="tablist" aria-label="Perfil">
+    <button type="button" class="aba" role="tab" aria-selected="true" data-panel="painel-pedir">Quero pedir ajuda</button>
+    <button type="button" class="aba" role="tab" aria-selected="false" data-panel="painel-ajudar">Quero dar ajuda</button>
+</nav>
 </body>
 </html>
