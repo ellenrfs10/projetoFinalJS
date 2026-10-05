@@ -1,16 +1,18 @@
 import { renderState, switchTab } from "./modules/ui.js";
-import { saveAlerts, loadAlerts, removeAlerts } from "./modules/storage.js";
+import { saveAlerts } from "./modules/storage.js";
 import { getPosition } from "./modules/geo.js";
+import { tocarAlarme, pararAlarme } from "./modules/audio.js";
+import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Configurar os botões do Guia de Estados para testes manuais
+    // 1. Configurar os botões do Guia de Estados para testes
     document.querySelectorAll("[data-estado]").forEach((btn) => {
         btn.addEventListener("click", () => {
             renderState(btn.dataset.estado);
         });
     });
 
-    // 2. Configurar a navegação por abas
+    // 2. Navegação por abas
     document.querySelectorAll(".aba").forEach((aba) => {
         aba.addEventListener("click", () => {
             const panelId = aba.dataset.panel;
@@ -18,26 +20,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 3. Evento no botão principal SOS com GPS real
+    // 3. Botão Principal SOS
     const botaoSOS = document.querySelector("#botao-sos");
     if (botaoSOS) {
         botaoSOS.addEventListener("click", acionarSOS);
     }
+
+    // 4. Configurar Botões dos Recursos Rápidos
+    configurarRecursos();
 });
 
-/**
- * Função responsável por acionar o pedido SOS e obter a localização real do GPS
- */
+
 async function acionarSOS() {
+    const alarmeToggle = document.querySelector("#alarme-toggle");
+    const alarmeAtivo = alarmeToggle ? alarmeToggle.checked : false;
+
     try {
-        // Coloca o botão no estado "A obter localização"
+        
         renderState("locating");
 
-        // Obtém as coordenadas reais através do módulo geo.js
-        const pos = await getPosition();
-        console.log("Posição obtida com sucesso:", pos);
+       
+        if (alarmeAtivo) {
+            tocarAlarme();
+        }
 
-        // Cria o objeto do pedido com os dados reais
+        // Procura a localização real do GPS
+        const pos = await getPosition();
+
+        // Guarda o registo do pedido no LocalStorage
         const novoPedido = {
             id: Date.now(),
             lat: pos.lat,
@@ -45,16 +55,34 @@ async function acionarSOS() {
             precisao: pos.precisao,
             criadoEm: new Date().toISOString()
         };
-
-        // Guarda o pedido no LocalStorage
         saveAlerts(novoPedido);
 
-        // Atualiza a interface para o estado "Enviado"
+       
         renderState("sent");
 
     } catch (err) {
-        console.error("Erro ao obter geolocalização:", err.message);
-        // Em caso de erro/recusa de GPS, altera o estado e exibe a mensagem de erro detalhada
+        console.error("Erro na geolocalização:", err.message);
         renderState("error", err.message);
+    } finally {
+        // Desliga o alarme ao terminar (seja por sucesso ou erro)
+        if (alarmeAtivo) {
+            pararAlarme();
+        }
     }
+}
+
+
+function configurarRecursos() {
+    const botoesRecursos = document.querySelectorAll(".recurso");
+
+    botoesRecursos.forEach((btn) => {
+        const texto = btn.textContent.trim();
+
+        if (texto.includes("Gravar Áudio")) {
+            btn.addEventListener("click", () => gerirGravacaoAudio(btn));
+        } else if (texto.includes("Partilhar Rota")) {
+            btn.addEventListener("click", () => partilharLocalizacao());
+        }
+        
+    });
 }
