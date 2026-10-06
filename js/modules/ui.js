@@ -52,7 +52,7 @@ export function renderState(estado, detalhe = "") {
     }
 
     if (mensagem) {
-        // Usa innerHTML em ambos os casos para processar formatação como <strong>
+       
         mensagem.innerHTML = detalhe || config.mensagem;
     }
 }

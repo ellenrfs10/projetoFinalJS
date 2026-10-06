@@ -32,16 +32,23 @@ export function tocarAlarme() {
 export function pararAlarme() {
     if (oscilador) {
         try{
-            oscilador.stop();
-            oscilador.disconnect();
+            
+            oscilador.stop(60);
+           
         } catch(err){
 
         }
     }
-    if (audioCtx){
-        audioCtx.close();
-    }
-    comecou = false;
-    oscilador = null;
-    audioCtx = null;
+     if (audioCtx){setTimeout(() => {
+         audioCtx.close();
+         oscilador.disconnect();
+         comecou = false;
+         oscilador = null;
+         audioCtx = null;
+
+     }, 60000);
+       
+    } 
+
+    
 }
