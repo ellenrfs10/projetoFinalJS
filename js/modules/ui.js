@@ -9,13 +9,13 @@ const ESTADOS = {
         titulo: "A obter a localização",
         sub: "",
         mensagem: "Mantém o ecrã aberto, é só um momento.",
-        desativado: true
+        desativado: false
     },
     sent: {
         titulo: "HELP ENVIADO!",
         sub: "",
         mensagem: "Pedido enviado. Caso seja necessário, liga 112 no botão abaixo.",
-        desativado: true
+        desativado: false
     },
     error: {
         titulo: "Tentar de novo",
@@ -25,11 +25,8 @@ const ESTADOS = {
     }
 };
 
-/**
- * Atualiza o estado visual do botão e a mensagem do SOS.
- * @param {string} estado - Nome do estado ('idle', 'locating', 'sent', 'error')
- * @param {string} [detalhe=""] - Mensagem personalizada opcional
- */
+
+
 export function renderState(estado, detalhe = "") {
     const botao = document.querySelector("#botao-sos");
     const texto = document.querySelector(".botao-sos__texto");
@@ -57,10 +54,8 @@ export function renderState(estado, detalhe = "") {
     }
 }
 
-/**
- * Gestão de alternância entre as abas principais (Pedir / Dar ajuda)
- * @param {string} targetPanelId - ID da secção a exibir
- */
+
+
 export function switchTab(targetPanelId) {
     const abas = document.querySelectorAll(".aba");
     // Seleciona apenas os painéis principais de navegação

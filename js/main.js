@@ -1,8 +1,11 @@
 import { renderState, switchTab } from "./modules/ui.js";
 import { saveAlerts } from "./modules/storage.js";
 import { getPosition } from "./modules/geo.js";
-import { tocarAlarme, pararAlarme } from "./modules/audio.js";
+import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
+
+
+let emProcessamento = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Configurar os botões do Guia de Estados para testes
@@ -30,16 +33,23 @@ document.addEventListener("DOMContentLoaded", () => {
     configurarRecursos();
 });
 
-
 async function acionarSOS() {
+    const botaoSOS = document.querySelector("#botao-sos");
+    const estadoAtual = botaoSOS ? botaoSOS.dataset.state : "idle";
+
+    // Se o alarme estiver a tocar OU o pedido já tiver sido enviado, o clique cancela e reseta o estado
+    if (estaATocar() || estadoAtual === "sent") {
+        pararAlarme();
+        renderState("idle");
+        return;
+    }
+
     const alarmeToggle = document.querySelector("#alarme-toggle");
     const alarmeAtivo = alarmeToggle ? alarmeToggle.checked : false;
 
     try {
-        
         renderState("locating");
 
-       
         if (alarmeAtivo) {
             tocarAlarme();
         }
@@ -57,20 +67,16 @@ async function acionarSOS() {
         };
         saveAlerts(novoPedido);
 
-       
         renderState("sent");
 
     } catch (err) {
         console.error("Erro na geolocalização:", err.message);
         renderState("error", err.message);
-    } finally {
-        // Desliga o alarme ao terminar (seja por sucesso ou erro)
         if (alarmeAtivo) {
             pararAlarme();
         }
     }
 }
-
 
 function configurarRecursos() {
     const botoesRecursos = document.querySelectorAll(".recurso");
@@ -83,6 +89,5 @@ function configurarRecursos() {
         } else if (texto.includes("Partilhar Rota")) {
             btn.addEventListener("click", () => partilharLocalizacao());
         }
-        
     });
 }

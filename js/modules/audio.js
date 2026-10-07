@@ -3,6 +3,10 @@ let oscilador = null;
 let ganho = null;
 let comecou = false;
 
+export function estaATocar() {
+    return comecou;
+}
+
 export function tocarAlarme() {
     if (comecou) return;
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -15,7 +19,7 @@ export function tocarAlarme() {
    /*  oscilador.frequency.setValueAtTime(800, audioCtx.currentTime); */
 
     const agora = audioCtx.currentTime;
-    for (let i = 0; i< 30; i++){
+    for (let i = 0; i< 120; i++){
         oscilador.frequency.setValueAtTime(800, agora + i* 0.4);
         oscilador.frequency.setValueAtTime(400, agora + i * 0.4 + 0.2);
     }
@@ -52,3 +56,29 @@ export function pararAlarme() {
 
     
 }
+
+//parar alarme com clique 
+
+export function pararAlarmeComClick(){
+
+    comecou = false;
+
+    if (ganho && audioCtx){
+        try{
+            ganho.gain.cancelScheduledValues(audioCtx.currentTime);
+            ganho.gain.setValueAtTime(0, audioCtx.currentTime);
+        } catch (err) {
+            } 
+
+    } if (audioCtx) {
+        try {
+            audioCtx.close();
+        } catch (e) { }
+    }
+
+    oscilador = null;
+    ganho = null;
+    audioCtx = null;
+
+}
+
