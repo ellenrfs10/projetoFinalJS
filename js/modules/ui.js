@@ -78,8 +78,8 @@ export function switchTab(targetPanelId) {
 export function renderizarListaPontoApoio(lista, containerElemento){
     containerElemento.innerHTML ="";
 
-    if (lista.lenght === 0){
-        "<p>Nenhum centro de apoio encontrado</p>"
+    if (lista.length === 0){
+        "<p> Nenhum centro de apoio encontrado </p>"
         return;
 
     }
@@ -101,3 +101,4 @@ export function renderizarListaPontoApoio(lista, containerElemento){
     containerElemento.innerHTML = cartoesHTML;
 
 }
+
