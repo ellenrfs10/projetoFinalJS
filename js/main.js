@@ -1,13 +1,15 @@
 import { renderState, switchTab } from "./modules/ui.js";
 import { saveAlerts } from "./modules/storage.js";
 import { getPosition } from "./modules/geo.js";
-import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
+import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick  } from "./modules/audio.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
+import { renderizarListaPontoApoio } from "./modules/ui.js";
+import { carregarCentrosApoio } from "./modules/api.js";
 
 
-let emProcessamento = false;
 
-document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener("DOMContentLoaded", async() => {
     // 1. Configurar os botões do Guia de Estados para testes
     document.querySelectorAll("[data-estado]").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -29,9 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
         botaoSOS.addEventListener("click", acionarSOS);
     }
 
+   
     // 4. Configurar Botões dos Recursos Rápidos
     configurarRecursos();
 });
+
 
 async function acionarSOS() {
     const botaoSOS = document.querySelector("#botao-sos");
@@ -39,8 +43,10 @@ async function acionarSOS() {
 
     // Se o alarme estiver a tocar OU o pedido já tiver sido enviado, o clique cancela e reseta o estado
     if (estaATocar() || estadoAtual === "sent") {
-        pararAlarme();
-        renderState("idle");
+        console.log("clicou para pausar")
+        pararAlarmeComClick();
+        /* pararAlarme(); */
+        /* renderState("idle"); */
         return;
     }
 
@@ -56,6 +62,7 @@ async function acionarSOS() {
 
         // Procura a localização real do GPS
         const pos = await getPosition();
+        console.log(pos);
 
         // Guarda o registo do pedido no LocalStorage
         const novoPedido = {
@@ -68,6 +75,11 @@ async function acionarSOS() {
         saveAlerts(novoPedido);
 
         renderState("sent");
+
+        const listaCentroApoio = await carregarCentrosApoio()
+        const container = document.querySelector("#pontos-de-apoio")
+
+        renderizarListaPontoApoio(listaCentroApoio, container);
 
     } catch (err) {
         console.error("Erro na geolocalização:", err.message);

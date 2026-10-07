@@ -61,7 +61,32 @@ export function pararAlarme() {
 
 export function pararAlarmeComClick(){
 
-    comecou = false;
+    if (oscilador) {
+        try {
+
+            oscilador.stop();
+
+        } catch (err) {
+
+        }
+    }
+    if (audioCtx) {
+      
+            audioCtx.close();
+            oscilador.disconnect();
+            comecou = false;
+            oscilador = null;
+            audioCtx = null;
+
+        }
+
+    } 
+
+
+
+
+
+    /* comecou = false;
 
     if (ganho && audioCtx){
         try{
@@ -78,7 +103,7 @@ export function pararAlarmeComClick(){
 
     oscilador = null;
     ganho = null;
-    audioCtx = null;
+    audioCtx = null; */
 
-}
+
 

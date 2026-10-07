@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nome": "Centro de Apoio à Vítima - Lisboa",
+        "tipo": "Abrigo",
+        "distrito": "Lisboa",
+        "telefone": "210000000",
+        "distanciaKm": 2.4
+    },
+    {
+        "id": 2,
+        "nome": "Associação de Proteção Voluntária - Porto",
+        "tipo": "Voluntárias",
+        "distrito": "Porto",
+        "telefone": "220000000",
+        "distanciaKm": 5.1
+    },
+    {
+        "id": 3,
+        "nome": "Gabinete de Apoio Jurídico - Coimbra",
+        "tipo": "Apoio Jurídico",
+        "distrito": "Coimbra",
+        "telefone": "239000000",
+        "distanciaKm": 1.8
+    }
+]

@@ -58,7 +58,7 @@ export function renderState(estado, detalhe = "") {
 
 export function switchTab(targetPanelId) {
     const abas = document.querySelectorAll(".aba");
-    // Seleciona apenas os painéis principais de navegação
+    
     const paineis = document.querySelectorAll("main > section[id^='painel-']");
 
     paineis.forEach((painel) => {
@@ -73,4 +73,31 @@ export function switchTab(targetPanelId) {
         const isSelected = btn.dataset.panel === targetPanelId;
         btn.setAttribute("aria-selected", isSelected ? "true" : "false");
     });
+}
+
+export function renderizarListaPontoApoio(lista, containerElemento){
+    containerElemento.innerHTML ="";
+
+    if (lista.lenght === 0){
+        "<p>Nenhum centro de apoio encontrado</p>"
+        return;
+
+    }
+
+    const cartoesHTML = lista.map((item) => {
+
+        return `
+            <article class="card-apoio" data-id="${item.id}">
+                <h3>${item.nome}</h3>
+                <p><strong>Tipo:</strong> ${item.tipo} | <strong>Distrito:</strong> ${item.distrito}</p>
+                <p><strong>Distância:</strong> ${item.distanciaKm} km</p>
+                <a href="tel:${item.telefone}" class="btn-ligar">📞 ${item.telefone}</a>
+            </article>
+        `;
+
+
+    }).join("");
+
+    containerElemento.innerHTML = cartoesHTML;
+
 }
