@@ -75,17 +75,20 @@ export function switchTab(targetPanelId) {
     });
 }
 
-export function renderizarListaPontoApoio(lista, containerElemento){
-    containerElemento.innerHTML ="";
+export function renderizarListaPontoApoio(listaCentroApoio, containerElemento) {
+    if (!containerElemento) return;
+    containerElemento.innerHTML = "";
 
-    if (lista.length === 0){
-        "<p> Nenhum centro de apoio encontrado </p>"
+    if (!listaCentroApoio || listaCentroApoio.length === 0) {
+        containerElemento.innerHTML = "<p>Nenhum centro de apoio encontrado.</p>";
         return;
-
     }
 
-    const cartoesHTML = lista.map((item) => {
+    // Ordena por distância (Requisito 3)
+    const listaOrdenada = [...listaCentroApoio].sort((a, b) => a.distanciaKm - b.distanciaKm);
 
+    // Mapeia e gera o HTML de cada card (Requisito 4)
+    const cartoesHTML = listaOrdenada.map((item) => {
         return `
             <article class="card-apoio" data-id="${item.id}">
                 <h3>${item.nome}</h3>
@@ -94,11 +97,30 @@ export function renderizarListaPontoApoio(lista, containerElemento){
                 <a href="tel:${item.telefone}" class="btn-ligar">📞 ${item.telefone}</a>
             </article>
         `;
-
-
     }).join("");
 
     containerElemento.innerHTML = cartoesHTML;
-
 }
 
+export function pontoApoioProximo(listaCentroApoio, containerElemento, raioKm = 10) {
+    if (!containerElemento) return [];
+
+    // USO CORRETO DO REDUCE (Requisito 1)
+    const apoioProximo = listaCentroApoio.reduce((acc, centro) => {
+        if (centro.distanciaKm <= raioKm) {
+            acc.push(centro);
+        }
+        return acc;
+    }, []);
+
+    // Atualiza o elemento no ecrã
+    if (apoioProximo.length === 0) {
+        containerElemento.innerHTML = "<p>Não há centros de apoio próximos à sua localização (raio de 10 km).</p>";
+    } else if (apoioProximo.length === 1) {
+        containerElemento.innerHTML = `<p>Existe <strong>1 centro de apoio</strong> próximo à sua localização.</p>`;
+    } else {
+        containerElemento.innerHTML = `<p>Existem <strong>${apoioProximo.length} centros de apoio</strong> próximos à sua localização.</p>`;
+    }
+
+    return apoioProximo;
+}

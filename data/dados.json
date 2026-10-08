@@ -5,22 +5,41 @@
         "tipo": "Abrigo",
         "distrito": "Lisboa",
         "telefone": "210000000",
-        "distanciaKm": 2.4
+        "distanciaKm": 11.5,
+        "lat": 38.7167,
+        "long": -9.1390
+
     },
     {
         "id": 2,
-        "nome": "Associação de Proteção Voluntária - Porto",
+        "nome": "Associação de Proteção Voluntária - Vila Verde",
         "tipo": "Voluntárias",
-        "distrito": "Porto",
+        "distrito": "Vila Verde",
         "telefone": "220000000",
-        "distanciaKm": 5.1
+        "distanciaKm": 5.1,
+        "lat": 41.648164,
+        "long": -8.435272
     },
     {
         "id": 3,
-        "nome": "Gabinete de Apoio Jurídico - Coimbra",
+        "nome": "Gabinete de Apoio Jurídico - Vila Verde",
         "tipo": "Apoio Jurídico",
-        "distrito": "Coimbra",
+        "distrito": "Vila Verde",
         "telefone": "239000000",
-        "distanciaKm": 1.8
+        "distanciaKm": 1.8,
+        "lat": 41.673991,
+        "long": -8.385846
+    },
+
+    {
+        "id": 4,
+        "nome": "Gabinete de Apoio à Mulher - Braga",
+        "tipo": "Apoio a Mulher",
+        "distrito": "Braga",
+        "distanciaKm": 10,
+        "lat": 41.602202,
+        "long": -8.452650
     }
+
+
 ]

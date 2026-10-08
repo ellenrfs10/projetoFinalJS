@@ -1,20 +1,14 @@
-import { renderState, switchTab } from "./modules/ui.js";
+import { renderState, switchTab, renderizarListaPontoApoio, pontoApoioProximo } from "./modules/ui.js";
 import { saveAlerts } from "./modules/storage.js";
-import { getPosition } from "./modules/geo.js";
-import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick  } from "./modules/audio.js";
+import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
+import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
-import { renderizarListaPontoApoio } from "./modules/ui.js";
 import { carregarCentrosApoio } from "./modules/api.js";
 
-
-
-
-document.addEventListener("DOMContentLoaded", async() => {
-    // 1. Configurar os botões do Guia de Estados para testes
+document.addEventListener("DOMContentLoaded", async () => {
+    // 1. Botões do Guia de Estados
     document.querySelectorAll("[data-estado]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            renderState(btn.dataset.estado);
-        });
+        btn.addEventListener("click", () => renderState(btn.dataset.estado));
     });
 
     // 2. Navegação por abas
@@ -31,22 +25,50 @@ document.addEventListener("DOMContentLoaded", async() => {
         botaoSOS.addEventListener("click", acionarSOS);
     }
 
-   
-    // 4. Configurar Botões dos Recursos Rápidos
+    // 4. Recursos Rápidos
     configurarRecursos();
+
+    // 5. Atualizar informação da rede ao carregar a página
+    await atualizarCardRede();
 });
 
+async function centrosComDistancia(pos) {
+    const centros = await carregarCentrosApoio();
+    return centros.map((centro) => ({
+        ...centro,
+        // Usa centro.long conforme está no teu JSON
+        distanciaKm: calcularDistanciaKm(pos.lat, pos.lng, centro.lat, centro.long)
+    }));
+}
+
+async function atualizarCardRede() {
+    const info = document.querySelector("#rede-info");
+    const containerPontos = document.querySelector("#pontos-de-apoio");
+    if (!info) return;
+
+    try {
+        const pos = await getPosition();
+        const centros = await centrosComDistancia(pos);
+
+        // Exibe o contador de centros próximos
+        pontoApoioProximo(centros, info);
+
+        // Renderiza os cards na interface
+        if (containerPontos) {
+            renderizarListaPontoApoio(centros, containerPontos);
+        }
+    } catch (err) {
+        info.textContent = err.message;
+    }
+}
 
 async function acionarSOS() {
     const botaoSOS = document.querySelector("#botao-sos");
     const estadoAtual = botaoSOS ? botaoSOS.dataset.state : "idle";
 
-    // Se o alarme estiver a tocar OU o pedido já tiver sido enviado, o clique cancela e reseta o estado
     if (estaATocar() || estadoAtual === "sent") {
-        console.log("clicou para pausar")
         pararAlarmeComClick();
-        /* pararAlarme(); */
-        /* renderState("idle"); */
+        renderState("idle");
         return;
     }
 
@@ -60,11 +82,8 @@ async function acionarSOS() {
             tocarAlarme();
         }
 
-        // Procura a localização real do GPS
         const pos = await getPosition();
-        console.log(pos);
 
-        // Guarda o registo do pedido no LocalStorage
         const novoPedido = {
             id: Date.now(),
             lat: pos.lat,
@@ -76,9 +95,9 @@ async function acionarSOS() {
 
         renderState("sent");
 
-        const listaCentroApoio = await carregarCentrosApoio()
-        const container = document.querySelector("#pontos-de-apoio")
-
+        // Atualiza e renderiza a lista de centros calculando as distâncias reais
+        const listaCentroApoio = await centrosComDistancia(pos);
+        const container = document.querySelector("#pontos-de-apoio");
         renderizarListaPontoApoio(listaCentroApoio, container);
 
     } catch (err) {
