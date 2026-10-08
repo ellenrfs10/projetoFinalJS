@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 4. Recursos Rápidos
     configurarRecursos();
 
-    // 5. Atualizar informação da rede ao carregar a página
+    // 5. APENAS carrega a quantidade de centros próximos no início (uso do REDUCE)
     await atualizarCardRede();
 });
 
@@ -36,27 +36,21 @@ async function centrosComDistancia(pos) {
     const centros = await carregarCentrosApoio();
     return centros.map((centro) => ({
         ...centro,
-        // Usa centro.long conforme está no teu JSON
         distanciaKm: calcularDistanciaKm(pos.lat, pos.lng, centro.lat, centro.long)
     }));
 }
 
+// Atualiza APENAS o contador na parte superior ao abrir a app
 async function atualizarCardRede() {
     const info = document.querySelector("#rede-info");
-    const containerPontos = document.querySelector("#pontos-de-apoio");
     if (!info) return;
 
     try {
         const pos = await getPosition();
         const centros = await centrosComDistancia(pos);
 
-        // Exibe o contador de centros próximos
+        // Executa o reduce e mostra apenas o texto com a contagem de pontos próximos
         pontoApoioProximo(centros, info);
-
-        // Renderiza os cards na interface
-        if (containerPontos) {
-            renderizarListaPontoApoio(centros, containerPontos);
-        }
     } catch (err) {
         info.textContent = err.message;
     }
@@ -95,9 +89,10 @@ async function acionarSOS() {
 
         renderState("sent");
 
-        // Atualiza e renderiza a lista de centros calculando as distâncias reais
+        // CARREGA OS CARDS (uso do MAP) APENAS APÓS SOLICITAR O HELP
         const listaCentroApoio = await centrosComDistancia(pos);
         const container = document.querySelector("#pontos-de-apoio");
+
         renderizarListaPontoApoio(listaCentroApoio, container);
 
     } catch (err) {
