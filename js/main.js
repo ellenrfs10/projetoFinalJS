@@ -1,5 +1,5 @@
 import { renderState, switchTab, renderizarListaPontoApoio, pontoApoioProximo } from "./modules/ui.js";
-import { saveAlerts } from "./modules/storage.js";
+import { saveAlerts, getAlarmePreferencial, setAlarmePreferencial } from "./modules/storage.js";
 import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
 import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
@@ -28,9 +28,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 4. Recursos Rápidos
     configurarRecursos();
 
-    // 5. APENAS carrega a quantidade de centros próximos no início (uso do REDUCE)
+    // 5. Configurar Checkbox do Alarme (DENTRO do DOMContentLoaded)
+    const alarmeToggle = document.querySelector("#alarme-toggle");
+    if (alarmeToggle) {
+        // Invoca a função com ()
+        alarmeToggle.checked = getAlarmePreferencial();
+
+        alarmeToggle.addEventListener("change", (e) => {
+            setAlarmePreferencial(e.target.checked);
+        });
+    }
+
+    // 6. Carrega a quantidade de centros próximos no início
     await atualizarCardRede();
 });
+
 
 async function centrosComDistancia(pos) {
     const centros = await carregarCentrosApoio();

@@ -1,4 +1,5 @@
 const CHAVE = "sosmulher:pedidos";
+const CHAVE_ALARME = "sosmulher:alarme_ativo";
 const MAX_PEDIDOS = 20;
 
 export function loadAlerts() {
@@ -25,4 +26,14 @@ export function saveAlerts(pedido) {
 
 export function removeAlerts(id) {
     return persist(loadAlerts().filter((p) => p.id !== id));
+}
+
+// CORRIGIDO: adicionado o 'return' e a verificação de string "true"
+export function getAlarmePreferencial() {
+    return localStorage.getItem(CHAVE_ALARME) === "true";
+}
+
+// CORRIGIDO: alterado de getItem para setItem e corrigido o nome da função
+export function setAlarmePreferencial(ativo) {
+    localStorage.setItem(CHAVE_ALARME, ativo);
 }
