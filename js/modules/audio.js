@@ -86,24 +86,4 @@ export function pararAlarmeComClick(){
 
 
 
-    /* comecou = false;
-
-    if (ganho && audioCtx){
-        try{
-            ganho.gain.cancelScheduledValues(audioCtx.currentTime);
-            ganho.gain.setValueAtTime(0, audioCtx.currentTime);
-        } catch (err) {
-            } 
-
-    } if (audioCtx) {
-        try {
-            audioCtx.close();
-        } catch (e) { }
-    }
-
-    oscilador = null;
-    ganho = null;
-    audioCtx = null; */
-
-
-
+    
