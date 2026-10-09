@@ -75,7 +75,7 @@ export function switchTab(targetPanelId) {
     });
 }
 
-export function renderizarListaPontoApoio(listaCentroApoio, containerElemento) {
+export function renderizarListaPontoApoio(listaCentroApoio, containerElemento, raioMaximoKm = 10) {
     if (!containerElemento) return;
     containerElemento.innerHTML = "";
 
@@ -84,10 +84,19 @@ export function renderizarListaPontoApoio(listaCentroApoio, containerElemento) {
         return;
     }
 
-    // Ordena por distância (Requisito 3)
-    const listaOrdenada = [...listaCentroApoio].sort((a, b) => a.distanciaKm - b.distanciaKm);
+    
+    const centrosProximos = listaCentroApoio.filter((centro) => centro.distanciaKm <= raioMaximoKm);
 
-    // Mapeia e gera o HTML de cada card (Requisito 4)
+    
+    if (centrosProximos.length === 0) {
+        containerElemento.innerHTML = `<p>Nenhum centro de apoio encontrado num raio de ${raioMaximoKm} km.</p>`;
+        return;
+    }
+
+   
+    const listaOrdenada = [...centrosProximos].sort((a, b) => a.distanciaKm - b.distanciaKm);
+
+    
     const cartoesHTML = listaOrdenada.map((item) => {
         return `
             <article class="card-apoio" data-id="${item.id}">
@@ -101,11 +110,10 @@ export function renderizarListaPontoApoio(listaCentroApoio, containerElemento) {
 
     containerElemento.innerHTML = cartoesHTML;
 }
-
 export function pontoApoioProximo(listaCentroApoio, containerElemento, raioKm = 10) {
     if (!containerElemento) return [];
 
-    // USO CORRETO DO REDUCE (Requisito 1)
+    // USO DO REDUCE
     const apoioProximo = listaCentroApoio.reduce((acc, centro) => {
         if (centro.distanciaKm <= raioKm) {
             acc.push(centro);
