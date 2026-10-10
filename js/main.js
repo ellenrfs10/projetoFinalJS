@@ -1,9 +1,12 @@
-import { renderState, switchTab, renderizarListaPontoApoio, pontoApoioProximo } from "./modules/ui.js";
+import { renderState, switchTab, renderizarListaPontoApoio, pontoApoioProximo, preencherSugestoesBusca } from "./modules/ui.js";
 import { saveAlerts, getAlarmePreferencial, setAlarmePreferencial } from "./modules/storage.js";
 import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
 import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
 import { carregarCentrosApoio } from "./modules/api.js";
+
+
+let centrosCarregados = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
     // 1. Botões do Guia de Estados
@@ -28,21 +31,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 4. Recursos Rápidos
     configurarRecursos();
 
-    // 5. Configurar Checkbox do Alarme (DENTRO do DOMContentLoaded)
+    // 5. Configurar Checkbox do Alarme
     const alarmeToggle = document.querySelector("#alarme-toggle");
     if (alarmeToggle) {
-        // Invoca a função com ()
         alarmeToggle.checked = getAlarmePreferencial();
-
         alarmeToggle.addEventListener("change", (e) => {
             setAlarmePreferencial(e.target.checked);
         });
     }
 
-    // 6. Carrega a quantidade de centros próximos no início
+    // 6. Carrega a quantidade de centros próximos no início (reduce)
     await atualizarCardRede();
-});
 
+    // 7. Carrega os dados da API para o autocomplete da pesquisa
+    centrosCarregados = await carregarCentrosApoio();
+    preencherSugestoesBusca(centrosCarregados);
+
+    // 8. Pesquisa em Tempo Real
+    const campoPesquisa = document.querySelector("#campo-pesquisa");
+    if (campoPesquisa) {
+        campoPesquisa.addEventListener("input", (e) => {
+            const termo = e.target.value.toLowerCase().trim();
+            const container = document.querySelector("#pontos-de-apoio");
+
+            if (!termo) {
+                if (container) container.innerHTML = "";
+                return;
+            }
+
+            const filtrados = centrosCarregados.filter((c) =>
+                c.nome.toLowerCase().includes(termo) ||
+                c.distrito.toLowerCase().includes(termo) ||
+                c.tipo.toLowerCase().includes(termo)
+            );
+
+            renderizarListaPontoApoio(filtrados, container);
+        });
+    }
+});
 
 async function centrosComDistancia(pos) {
     const centros = await carregarCentrosApoio();
@@ -52,7 +78,6 @@ async function centrosComDistancia(pos) {
     }));
 }
 
-// Atualiza APENAS o contador na parte superior ao abrir a app
 async function atualizarCardRede() {
     const info = document.querySelector("#rede-info");
     if (!info) return;
@@ -60,8 +85,6 @@ async function atualizarCardRede() {
     try {
         const pos = await getPosition();
         const centros = await centrosComDistancia(pos);
-
-        // Executa o reduce e mostra apenas o texto com a contagem de pontos próximos
         pontoApoioProximo(centros, info);
     } catch (err) {
         info.textContent = err.message;
@@ -101,7 +124,6 @@ async function acionarSOS() {
 
         renderState("sent");
 
-        // CARREGA OS CARDS (uso do MAP) APENAS APÓS SOLICITAR O HELP
         const listaCentroApoio = await centrosComDistancia(pos);
         const container = document.querySelector("#pontos-de-apoio");
 

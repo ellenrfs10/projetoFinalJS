@@ -132,3 +132,16 @@ export function pontoApoioProximo(listaCentroApoio, containerElemento, raioKm = 
 
     return apoioProximo;
 }
+
+export function preencherSugestoesBusca(listaCentroApoio) {
+    const listaDados = document.querySelector("#sugestoes-centros");
+    if (!listaDados) {
+        console.log("Elemento #sugestoes-centros não encontrado no DOM");
+        return;
+    }
+
+    
+    listaDados.innerHTML = listaCentroApoio.map((c) => {
+        return `<option value="${c.nome}">${c.tipo} - ${c.distrito}</option>`;
+    }).join("");
+}
