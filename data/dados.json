@@ -36,7 +36,47 @@
         "telefone":"240000000",
         "lat": 41.602202,
         "long": -8.452650
-    }
+    },
+
+    {
+    "id": 5,
+    "nome": "Centro de Apoio à Mulher - Gondomar",
+    "tipo": "Acolhimento e Apoio Social",
+    "distrito": "Porto",
+    "telefone": "222000001",
+    "lat": 41.141508,
+    "long": -8.532351
+
+    },
+
+    {
+    "id": 6,
+    "nome": "Gabinete de Atendimento à Vítima - Porto Central",
+    "tipo": "Apoio Psicológico e Jurídico",
+    "distrito": "Porto",
+    "telefone": "222000002",
+    "lat": 41.149610,
+    "long": -8.610990
+  },
+
+  {
+    "id": 7,
+    "nome": "Espaço de Proteção e Resposta - Guimarães",
+    "tipo": "Apoio Multidisciplinar",
+    "distrito": "Braga",
+    "telefone": "253000003",
+    "lat": 41.442530,
+    "long": -8.291786
+  },
+ {
+    "id": 8,
+    "nome": "Casa de Acolhimento de Emergência - Porto Ocidental",
+    "tipo": "Acolhimento Temporário",
+    "distrito": "Porto",
+    "telefone": "222000005",
+    "lat": 41.162140,
+    "long": -8.657230
+  }
 
 
 ]

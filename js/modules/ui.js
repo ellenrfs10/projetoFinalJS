@@ -81,7 +81,7 @@ export function switchTab(targetPanelId) {
     });
 }
 
-export function renderizarListaPontoApoio(listaCentroApoio, containerElemento, raioMaximoKm = 10) {
+export function renderizarListaPontoApoio(listaCentroApoio, containerElemento, raioMaximoKm = 10, filtrarPorRaio = false) {
     if (!containerElemento) return;
     containerElemento.innerHTML = "";
 
@@ -91,24 +91,36 @@ export function renderizarListaPontoApoio(listaCentroApoio, containerElemento, r
     }
 
     
-    const centrosProximos = listaCentroApoio.filter((centro) => centro.distanciaKm <= raioMaximoKm);
+    let centrosParaExibir = listaCentroApoio;
+    if (filtrarPorRaio) {
+        centrosParaExibir = listaCentroApoio.filter((centro) => centro.distanciaKm <= raioMaximoKm);
+    }
 
     
-    if (centrosProximos.length === 0) {
+    if (centrosParaExibir.length === 0) {
         containerElemento.innerHTML = `<p>Nenhum centro de apoio encontrado num raio de ${raioMaximoKm} km.</p>`;
         return;
     }
 
-   
-    const listaOrdenada = [...centrosProximos].sort((a, b) => a.distanciaKm - b.distanciaKm);
-
     
+    const listaOrdenada = [...centrosParaExibir].sort((a, b) => {
+        if (a.distanciaKm !== undefined && b.distanciaKm !== undefined) {
+            return a.distanciaKm - b.distanciaKm;
+        }
+        return 0;
+    });
+
+    // Mapeia e gera o HTML de cada card
     const cartoesHTML = listaOrdenada.map((item) => {
+        const textoDistancia = item.distanciaKm !== undefined
+            ? `<p><strong>Distância:</strong> ${item.distanciaKm} km</p>`
+            : "";
+
         return `
             <article class="card-apoio" data-id="${item.id}">
                 <h3>${item.nome}</h3>
                 <p><strong>Tipo:</strong> ${item.tipo} | <strong>Distrito:</strong> ${item.distrito}</p>
-                <p><strong>Distância:</strong> ${item.distanciaKm} km</p>
+                ${textoDistancia}
                 <a href="tel:${item.telefone}" class="btn-ligar">📞 ${item.telefone}</a>
             </article>
         `;

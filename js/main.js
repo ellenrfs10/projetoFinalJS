@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             preencherSugestoesBusca(filtrados);
 
-            renderizarListaPontoApoio(filtrados, container);
+            renderizarListaPontoApoio(filtrados, container, 10, false);
         });
     }
 });
@@ -131,7 +131,7 @@ async function acionarSOS() {
         const proximos = listaCentroApoio.filter((c) => c.distanciaKm <=10);
 
         const container = document.querySelector("#pontos-de-apoio");
-        renderizarListaPontoApoio(proximos, container);      
+        renderizarListaPontoApoio(proximos, container, 10, true);      
         
         if(proximos.length === 0) {
             renderState("no_coverage");
