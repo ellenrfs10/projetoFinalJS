@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (!termo) {
                 if (container) container.innerHTML = "";
+                preencherSugestoesBusca([]);
                 return;
             }
 
@@ -64,6 +65,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 c.distrito.toLowerCase().includes(termo) ||
                 c.tipo.toLowerCase().includes(termo)
             );
+
+            preencherSugestoesBusca(filtrados);
 
             renderizarListaPontoApoio(filtrados, container);
         });

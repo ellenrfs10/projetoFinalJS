@@ -11,6 +11,12 @@ const ESTADOS = {
         mensagem: "Mantém o ecrã aberto, é só um momento.",
         desativado: false
     },
+    no_coverage: {
+        titulo: "A TOCAR ALARME",
+        sub: "Clique p/ Parar",
+        mensagem: "Nenhum centro de apoio num raio de 10km. <strong>Ligue 112 em caso de emergência.</strong>",
+        desativado: false
+    },
     sent: {
         titulo: "HELP ENVIADO!",
         sub: "",
@@ -136,7 +142,7 @@ export function pontoApoioProximo(listaCentroApoio, containerElemento, raioKm = 
 export function preencherSugestoesBusca(listaCentroApoio) {
     const listaDados = document.querySelector("#sugestoes-centros");
     if (!listaDados) {
-        console.log("Elemento #sugestoes-centros não encontrado no DOM");
+       /*  console.log("Elemento #sugestoes-centros não encontrado no DOM"); */
         return;
     }
 
