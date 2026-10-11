@@ -98,7 +98,7 @@ async function acionarSOS() {
     const botaoSOS = document.querySelector("#botao-sos");
     const estadoAtual = botaoSOS ? botaoSOS.dataset.state : "idle";
 
-    if (estaATocar() || estadoAtual === "sent") {
+    if (estaATocar() || estadoAtual === "sent" || estadoAtual === "no_coverage") {
         pararAlarmeComClick();
         renderState("idle");
         return;
@@ -125,12 +125,19 @@ async function acionarSOS() {
         };
         saveAlerts(novoPedido);
 
-        renderState("sent");
+        /* renderState("sent"); */
 
         const listaCentroApoio = await centrosComDistancia(pos);
-        const container = document.querySelector("#pontos-de-apoio");
+        const proximos = listaCentroApoio.filter((c) => c.distanciaKm <=10);
 
-        renderizarListaPontoApoio(listaCentroApoio, container);
+        const container = document.querySelector("#pontos-de-apoio");
+        renderizarListaPontoApoio(proximos, container);      
+        
+        if(proximos.length === 0) {
+            renderState("no_coverage");
+        } else{
+            renderState("sent");
+        }
 
     } catch (err) {
         console.error("Erro na geolocalização:", err.message);
