@@ -4,8 +4,7 @@
         "nome": "Centro de Apoio à Vítima - Lisboa",
         "tipo": "Abrigo",
         "distrito": "Lisboa",
-        "telefone": "210000000",
-        "distanciaKm": 11.5,
+        "telefone": "210000000",        
         "lat": 38.7167,
         "long": -9.1390
 
@@ -15,8 +14,7 @@
         "nome": "Associação de Proteção Voluntária - Vila Verde",
         "tipo": "Voluntárias",
         "distrito": "Vila Verde",
-        "telefone": "220000000",
-        "distanciaKm": 5.1,
+        "telefone": "220000000",        
         "lat": 41.648164,
         "long": -8.435272
     },
@@ -25,8 +23,7 @@
         "nome": "Gabinete de Apoio Jurídico - Vila Verde",
         "tipo": "Apoio Jurídico",
         "distrito": "Vila Verde",
-        "telefone": "239000000",
-        "distanciaKm": 1.8,
+        "telefone": "239000000",       
         "lat": 41.673991,
         "long": -8.385846
     },
@@ -37,7 +34,6 @@
         "tipo": "Apoio a Mulher",
         "distrito": "Braga",
         "telefone":"240000000",
-        "distanciaKm": 10,
         "lat": 41.602202,
         "long": -8.452650
     }

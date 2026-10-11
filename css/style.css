@@ -325,3 +325,47 @@ header {
         border-bottom-color: var(--violet);
     }
 }
+
+#gps-header.titulo-header{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    gap: 12px;                     
+    padding: 10px 16px;
+
+}
+
+.titulo-texto{
+    display: flex;
+    flex-direction: column;
+}
+
+.busca-container{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.capsula-busca {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    outline: none;
+    width: 140px;
+    transition: all 0.3s ease;
+}
+
+.capsula-busca::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.capsula-busca:focus {
+    width: 170px;
+    background-color: #ffffff;
+    color: #333333;
+    border-color: #ffffff;
+}
