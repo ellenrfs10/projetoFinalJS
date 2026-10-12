@@ -10,9 +10,9 @@
 <body>
 <header>
     <div id="gps-header" class="titulo-header">
-        <span class="icone-sos-blue">
-            <img src="iconesos.jpg" alt="">
-        </span>
+        <figure class="icone-sos-blue">
+            <img src="iconesos.jpg" alt="Logótipo SOS Mulher">
+        </figure>
 
         <div class="titulo-texto">
             <h1>SOS Mulher</h1>
@@ -39,13 +39,13 @@
 
 <main>
     <!-- Aba 1: Quero pedir ajuda -->
-    <section id="painel-pedir">
-        <div class="rede-protetora">
+    <section id="painel-pedir" role="tabpanel" aria-labelledby="aba-pedir">
+        <aside class="rede-protetora">
             <h2 class="rede-protetora-titulo">Rede Protetora Disponível</h2>
             <p id="rede-info">A procurar centros de apoio perto de ti…</p>
-        </div>
+        </aside>
 
-        <div class="pedido-sos">
+        <section class="pedido-sos">
             <button id="botao-sos" class="botao-sos" type="button" data-state="idle" aria-label="Pedir ajuda SOS">
                 <span class="botao-sos__texto">HELP</span>
                 <span class="botao-sos__sub">Tocar para acionar</span>
@@ -54,35 +54,34 @@
                 O teu pedido será enviado instantaneamente para protetoras e voluntárias num raio de <strong>10 km.</strong> 
             </p>
             
-            <label class="alarme-opcao">
+            <label class="alarme-opcao" for="alarme-toggle">
                 <input type="checkbox" id="alarme-toggle">
                 Alarme sonoro ao acionar
             </label>
-        </div>
-        <section id="pontos-de-apoio">
-
-
         </section>
 
-        <div class="recursos">
+        <!-- Container dinâmico gerido pelo JS -->
+        <section id="pontos-de-apoio" aria-label="Lista de centros de apoio próximos"></section>
+
+        <section class="recursos">
             <h2 class="titulo-2">Recursos Rápidos de Segurança</h2>
-            <div class="recursos__lista">
+            <nav class="recursos__lista" aria-label="Ações rápidas de segurança">
                 <a class="recurso" href="tel:112">
                     <span class="recurso__icone" aria-hidden="true">📞</span>
                     Ligar 112
                 </a>
-                <button type="button" class="recurso">
+                <button type="button" class="recurso" id="btn-gravar-audio">
                     <span class="recurso__icone" aria-hidden="true">🎙️</span>
                     Gravar Áudio
                 </button>
-                <button type="button" class="recurso">
+                <button type="button" class="recurso" id="btn-partilhar-rota">
                     <span class="recurso__icone" aria-hidden="true">📍</span>
                     Partilhar Rota
                 </button>
-            </div>
-        </div>
+            </nav>
+        </section>
 
-        <div class="guia-container">
+        <section class="guia-container">
             <h2>Guia de Estados do Botão</h2>
             <p>Testa manualmente cada fase da experiência</p>
             <div class="guia-estados">
@@ -90,11 +89,11 @@
                 <button type="button" data-estado="locating">2 - A localizar</button>
                 <button type="button" data-estado="sent">3 - Enviado</button>
             </div>
-        </div>
+        </section>
     </section>
 
     <!-- Aba 2: Quero dar ajuda -->
-    <section id="painel-ajudar" hidden>
+    <section id="painel-ajudar" role="tabpanel" aria-labelledby="aba-ajudar" hidden>
 
         <section class="radar" aria-labelledby="radar-titulo">
             <h2 class="radar__titulo" id="radar-titulo">
@@ -108,59 +107,42 @@
         <ul class="estatisticas">
             <li class="estatistica">
                 <span class="estatistica__icone" aria-hidden="true">👥</span>
-                <p class="estatistica__texto">
+                <div class="estatistica__texto">
                     <strong class="estatistica__valor" id="total-protetoras">24</strong>
                     <span class="estatistica__label">Protetoras ativas na sua área</span>
-                </p>
+                </div>
             </li>
-           <li class="estatistica">
+            <li class="estatistica">
                 <span class="estatistica__icone" aria-hidden="true">⏱️</span>
-                <p class="estatistica__texto">
+                <div class="estatistica__texto">
                     <strong class="estatistica__valor">4 min</strong>
                     <span class="estatistica__label">Tempo médio de resposta</span>
-                </p>
+                </div>
             </li> 
         </ul>
 
         <section class="alertas" aria-labelledby="alertas-titulo">
-            <div class="alertas__cabecalho">
+            <header class="alertas__cabecalho">
                 <h2 class="alertas__titulo" id="alertas-titulo">Alertas Recentes de Proximidade</h2>
                 <p class="alertas__tempo-real">
                     <span class="alertas__contagem" id="total-alertas">3</span>
-                        Atualização em tempo real
+                    Atualização em tempo real
                 </p>
-            </div>
+            </header>
 
             <ul class="alertas__lista" id="lista-alertas" aria-live="polite">
-                    <!-- Cartão de exemplo: mais tarde o JS gera estes itens -->
-                <li>
-                    <article class="alerta" data-id="1">
-                        <p class="alerta__meta">
-                            <span class="alerta__prioridade alerta__prioridade--alta">
-                            <span aria-hidden="true">!</span> Prioridade Alta
-                            </span>
-                            <time class="alerta__tempo" datetime="2026-10-12T14:28">Há 2 min</time>
-                            <span class="alerta__distancia">A 1.8 km de si</span>
-                        </p>
-
-                        <h3 class="alerta__titulo">Pedido de Intervenção Imediata</h3>
-                            <p class="alerta__descricao">
-                                Localização: <strong>Parque das Nações</strong> (perto da Alameda dos Oceanos).
-                                A utilizadora ativou sinal de apoio por aproximação não consensual.
-                            </p>
-
-                            <button type="button" class="botao-ajudar" data-id="1">Posso Ajudar</button>
-                    </article>
-                </li>
+                <!-- Conteúdo gerado dinamicamente via JS (ajudar.js) -->
             </ul>
         </section>
 
     </section>
 </main>
 
-<nav class="abas" role="tablist" aria-label="Perfil">
-    <button type="button" class="aba" role="tab" aria-selected="true" data-panel="painel-pedir">Quero pedir ajuda</button>
-    <button type="button" class="aba" role="tab" aria-selected="false" data-panel="painel-ajudar">Quero dar ajuda</button>
+<nav class="abas" role="tablist" aria-label="Navegação principal por abas">
+    <button type="button" class="aba" role="tab" id="aba-pedir" aria-selected="true" aria-controls="painel-pedir" data-panel="painel-pedir">Quero pedir ajuda</button>
+    <button type="button" class="aba" role="tab" id="aba-ajudar" aria-selected="false" aria-controls="painel-ajudar" data-panel="painel-ajudar">
+        Quero dar ajuda <span id="badge-contador-ajuda" class="aba__contagem">0</span>
+    </button>
 </nav>
 </body>
 </html>

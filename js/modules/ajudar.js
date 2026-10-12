@@ -1,5 +1,4 @@
-import { loadAlerts } from "./storage.js"
-
+import { loadAlerts } from "./storage.js";
 
 /**
  * Renderiza a lista de alertas recentes e atualiza os contadores da Aba 2

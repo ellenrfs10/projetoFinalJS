@@ -1,11 +1,10 @@
-import { renderState, switchTab, renderizarListaPontoApoio, pontoApoioProximo, preencherSugestoesBusca } from "./modules/ui.js";
-import { saveAlerts, getAlarmePreferencial, setAlarmePreferencial } from "./modules/storage.js";
-import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
-import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
-import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
+import { renderState, switchTab, renderizarListaPontoApoio, preencherSugestoesBusca, pontoApoioProximo } from "./modules/ui.js";
+import { getAlarmePreferencial, setAlarmePreferencial } from "./modules/storage.js";
 import { carregarCentrosApoio } from "./modules/api.js";
+import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
 import { inicializarPainelAjudar } from "./modules/ajudar.js";
-
+import { acionarSOS } from "./modules/panic.js";
+import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
 
 let centrosCarregados = [];
 
@@ -26,11 +25,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 3. Botão Principal SOS
     const botaoSOS = document.querySelector("#botao-sos");
     if (botaoSOS) {
-        botaoSOS.addEventListener("click", acionarSOS);
+        botaoSOS.addEventListener("click", () => acionarSOS(centrosCarregados));
     }
 
-    // 4. Recursos Rápidos
-    configurarRecursos();
+    // 4. Recursos Rápidos (Áudio e Partilha)
+    const btnAudio = document.querySelector("#btn-gravar-audio");
+    if (btnAudio) btnAudio.addEventListener("click", () => gerirGravacaoAudio(btnAudio));
+
+    const btnPartilhar = document.querySelector("#btn-partilhar-rota");
+    if (btnPartilhar) btnPartilhar.addEventListener("click", partilharLocalizacao);
 
     // 5. Configurar Checkbox do Alarme
     const alarmeToggle = document.querySelector("#alarme-toggle");
@@ -41,12 +44,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 6. Carrega a quantidade de centros próximos no início (reduce)
-    await atualizarCardRede();
-
-    // 7. Carrega os dados da API para o autocomplete da pesquisa
+    // 6. Carrega os dados da API para o autocomplete e funcionamento geral
     centrosCarregados = await carregarCentrosApoio();
     preencherSugestoesBusca(centrosCarregados);
+
+    // 7. Calcula e preenche o card "Rede Protetora Disponível" logo no início
+    try {
+        const pos = await getPosition();
+        const infoRedeEl = document.querySelector("#rede-info");
+        if (infoRedeEl && centrosCarregados.length > 0) {
+            const centrosComDistancia = centrosCarregados.map((c) => ({
+                ...c,
+                distanciaKm: calcularDistanciaKm(pos.lat, pos.lng, c.lat, c.long)
+            }));
+            pontoApoioProximo(centrosComDistancia, infoRedeEl, 10);
+        }
+    } catch (err) {
+        const infoRedeEl = document.querySelector("#rede-info");
+        if (infoRedeEl) infoRedeEl.textContent = "Não foi possível obter a localização para calcular centros próximos.";
+    }
 
     // 8. Pesquisa em Tempo Real
     const campoPesquisa = document.querySelector("#campo-pesquisa");
@@ -68,101 +84,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
             preencherSugestoesBusca(filtrados);
-
             renderizarListaPontoApoio(filtrados, container, 10, false);
-
-        
         });
     }
 
+    // 9. Inicializa e preenche os alertas na Aba 2
     inicializarPainelAjudar();
 });
-
-async function centrosComDistancia(pos) {
-    const centros = await carregarCentrosApoio();
-    return centros.map((centro) => ({
-        ...centro,
-        distanciaKm: calcularDistanciaKm(pos.lat, pos.lng, centro.lat, centro.long)
-    }));
-}
-
-async function atualizarCardRede() {
-    const info = document.querySelector("#rede-info");
-    if (!info) return;
-
-    try {
-        const pos = await getPosition();
-        const centros = await centrosComDistancia(pos);
-        pontoApoioProximo(centros, info);
-    } catch (err) {
-        info.textContent = err.message;
-    }
-}
-
-async function acionarSOS() {
-    const botaoSOS = document.querySelector("#botao-sos");
-    const estadoAtual = botaoSOS ? botaoSOS.dataset.state : "idle";
-
-    if (estaATocar() || estadoAtual === "sent" || estadoAtual === "no_coverage") {
-        pararAlarmeComClick();
-        renderState("idle");
-        return;
-    }
-
-    const alarmeToggle = document.querySelector("#alarme-toggle");
-    const alarmeAtivo = alarmeToggle ? alarmeToggle.checked : false;
-
-    try {
-        renderState("locating");
-
-        if (alarmeAtivo) {
-            tocarAlarme();
-        }
-
-        const pos = await getPosition();
-
-        const novoPedido = {
-            id: Date.now(),
-            lat: pos.lat,
-            lng: pos.lng,
-            precisao: pos.precisao,
-            criadoEm: new Date().toISOString()
-        };
-        saveAlerts(novoPedido);
-
-        /* renderState("sent"); */
-
-        const listaCentroApoio = await centrosComDistancia(pos);
-        const proximos = listaCentroApoio.filter((c) => c.distanciaKm <=10);
-
-        const container = document.querySelector("#pontos-de-apoio");
-        renderizarListaPontoApoio(proximos, container, 10, true);      
-        
-        if(proximos.length === 0) {
-            renderState("no_coverage");
-        } else{
-            renderState("sent");
-        }
-
-    } catch (err) {
-        console.error("Erro na geolocalização:", err.message);
-        renderState("error", err.message);
-        if (alarmeAtivo) {
-            pararAlarme();
-        }
-    }
-}
-
-function configurarRecursos() {
-    const botoesRecursos = document.querySelectorAll(".recurso");
-
-    botoesRecursos.forEach((btn) => {
-        const texto = btn.textContent.trim();
-
-        if (texto.includes("Gravar Áudio")) {
-            btn.addEventListener("click", () => gerirGravacaoAudio(btn));
-        } else if (texto.includes("Partilhar Rota")) {
-            btn.addEventListener("click", () => partilharLocalizacao());
-        }
-    });
-}

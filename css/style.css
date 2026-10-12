@@ -530,6 +530,7 @@ header {
 .estatistica__texto {
     display: grid;
     margin: 0;
+    gap: 0.125rem;
 }
 
 .estatistica__valor {
