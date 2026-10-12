@@ -4,6 +4,8 @@
 
 **SOS Mulher** é uma aplicação web progressiva, interativa e responsiva criada para prestar auxílio rápido a mulheres em situações de emergência ou vulnerabilidade. A plataforma permite acionar pedidos de socorro (SOS) geolocalizados, emitir alarmes sonoros dissuasores, consultar e pesquisar centros de apoio próximos em tempo real e aceder a recursos rápidos de segurança.
 
+**Observação:** O app é mobile first, por este motivo, deve ser testado em formato de dispositivos móveis.
+
 ---
 
 ## 🌐 Link da Aplicação (GitHub Pages)
