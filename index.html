@@ -95,7 +95,66 @@
 
     <!-- Aba 2: Quero dar ajuda -->
     <section id="painel-ajudar" hidden>
-        <p>Em breve: alertas perto de ti.</p>
+
+        <section class="radar" aria-labelledby="radar-titulo">
+            <h2 class="radar__titulo" id="radar-titulo">
+                <span class="badge-green" aria-hidden="true"></span>
+                Radar Protetor: Ativo
+            </h2>
+            <p class="radar__texto">Prontidão comunitária para apoio imediato e seguro</p>
+            <p class="chip">Raio: 10 km</p>
+        </section>
+
+        <ul class="estatisticas">
+            <li class="estatistica">
+                <span class="estatistica__icone" aria-hidden="true">👥</span>
+                <p class="estatistica__texto">
+                    <strong class="estatistica__valor" id="total-protetoras">24</strong>
+                    <span class="estatistica__label">Protetoras ativas na sua área</span>
+                </p>
+            </li>
+           <li class="estatistica">
+                <span class="estatistica__icone" aria-hidden="true">⏱️</span>
+                <p class="estatistica__texto">
+                    <strong class="estatistica__valor">4 min</strong>
+                    <span class="estatistica__label">Tempo médio de resposta</span>
+                </p>
+            </li> 
+        </ul>
+
+        <section class="alertas" aria-labelledby="alertas-titulo">
+            <div class="alertas__cabecalho">
+                <h2 class="alertas__titulo" id="alertas-titulo">Alertas Recentes de Proximidade</h2>
+                <p class="alertas__tempo-real">
+                    <span class="alertas__contagem" id="total-alertas">3</span>
+                        Atualização em tempo real
+                </p>
+            </div>
+
+            <ul class="alertas__lista" id="lista-alertas" aria-live="polite">
+                    <!-- Cartão de exemplo: mais tarde o JS gera estes itens -->
+                <li>
+                    <article class="alerta" data-id="1">
+                        <p class="alerta__meta">
+                            <span class="alerta__prioridade alerta__prioridade--alta">
+                            <span aria-hidden="true">!</span> Prioridade Alta
+                            </span>
+                            <time class="alerta__tempo" datetime="2026-10-12T14:28">Há 2 min</time>
+                            <span class="alerta__distancia">A 1.8 km de si</span>
+                        </p>
+
+                        <h3 class="alerta__titulo">Pedido de Intervenção Imediata</h3>
+                            <p class="alerta__descricao">
+                                Localização: <strong>Parque das Nações</strong> (perto da Alameda dos Oceanos).
+                                A utilizadora ativou sinal de apoio por aproximação não consensual.
+                            </p>
+
+                            <button type="button" class="botao-ajudar" data-id="1">Posso Ajudar</button>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
     </section>
 </main>
 
