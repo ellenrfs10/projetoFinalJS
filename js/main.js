@@ -4,6 +4,7 @@ import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
 import { tocarAlarme, pararAlarme, estaATocar, pararAlarmeComClick } from "./modules/audio.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
 import { carregarCentrosApoio } from "./modules/api.js";
+import { inicializarPainelAjudar } from "./modules/ajudar.js";
 
 
 let centrosCarregados = [];
@@ -69,8 +70,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             preencherSugestoesBusca(filtrados);
 
             renderizarListaPontoApoio(filtrados, container, 10, false);
+
+        
         });
     }
+
+    inicializarPainelAjudar();
 });
 
 async function centrosComDistancia(pos) {
