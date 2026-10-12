@@ -47,13 +47,7 @@ header {
     color: #fff;
 }
 
-.titulo-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.75rem;
-    padding: 0.875rem 1.25rem;
-}
+
 
 .titulo-header h1{
     margin: 0;
@@ -71,13 +65,9 @@ header {
     width: 0.625rem;
     height: 0.625rem;
     border-radius: 50%;
-    background-color: #3ddc97 ;
+    background-color: #3ddc97;
+    flex-shrink: 0;
 
-}
-
-.gps-letter{
-    margin: 0;
-    font-size: 0.875rem;
 }
 
 .capsula{
@@ -223,15 +213,6 @@ header {
     accent-color: var(--violet);
 }
 
-.titulo-texto{
-    display: grid;
-}
-
-.gps-letter{
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-}
 
 .rede-protetora {
     background: var(--card);
@@ -326,37 +307,53 @@ header {
     }
 }
 
-#gps-header.titulo-header{
-
-    display: flex;
+.titulo-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+        "icone texto"
+        "busca busca";
     align-items: center;
-    justify-content: space-between; 
-    gap: 12px;                     
-    padding: 10px 16px;
-
+    gap: 0.625rem 0.75rem;
+    padding: 0.75rem 1rem;
 }
 
-.titulo-texto{
-    display: flex;
-    flex-direction: column;
+.icone-sos-blue {
+    grid-area: icone;
 }
 
-.busca-container{
+.titulo-texto {
+    grid-area: texto;
+    display: grid;
+    min-width: 0;
+}
+
+.gps-letter {
+    margin: 0;
     display: flex;
     align-items: center;
-    margin-left: auto;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+}
+
+.busca-container {
+    grid-area: busca;
 }
 
 .capsula-busca {
-    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    font: inherit;
+    font-size: 1rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    border-radius: 999px;
     outline: none;
-    width: 140px;
-    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .capsula-busca::placeholder {
@@ -364,8 +361,17 @@ header {
 }
 
 .capsula-busca:focus {
-    width: 170px;
-    background-color: #ffffff;
-    color: #333333;
-    border-color: #ffffff;
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
 }
+
+/* A partir de 480px: tudo numa só linha */
+@media (min-width: 30rem) {
+    .titulo-header {
+        grid-template-columns: auto 1fr minmax(10rem, 14rem);
+        grid-template-areas: "icone texto busca";
+    }
+}
+
+
