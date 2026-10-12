@@ -680,5 +680,56 @@ header {
     border-radius: 999px;
 }
 
+/* ===== Guia de estados (painel de testes) ===== */
+.guia-container {
+    margin-top: 1.5rem;
+    padding: 1rem 1.125rem;
+    border: 2px dashed var(--line);
+    border-radius: var(--radius);
+}
 
+.guia-container h2 {
+    margin: 0 0 0.25rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+}
+
+.guia-container p {
+    margin: 0 0 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-soft);
+}
+
+.guia-estados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.guia-estados button {
+    flex: 1 1 auto;
+    min-height: 44px;
+    padding: 0.5rem 0.875rem;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--violet);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.guia-estados button:hover {
+    color: #fff;
+    background: var(--violet);
+    border-color: var(--violet);
+}
+
+.guia-estados button:active {
+    transform: scale(0.97);
+}
 
