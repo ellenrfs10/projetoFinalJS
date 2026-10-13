@@ -52,3 +52,13 @@ export function getAlarmePreferencial() {
 export function setAlarmePreferencial(ativo) {
     localStorage.setItem(CHAVE_ALARME, ativo);
 }
+
+// Gestão do Raio de Distância (Padrão: 10km)
+export function getRaioPreferencial() {
+    const valor = localStorage.getItem(CHAVE_RAIO);
+    return valor !== null ? Number(valor) : 10;
+}
+
+export function setRaioPreferencial(raio) {
+    localStorage.setItem(CHAVE_RAIO, Number(raio));
+}
