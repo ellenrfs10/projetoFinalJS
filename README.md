@@ -11,7 +11,7 @@
 ## 🌐 Link da Aplicação (GitHub Pages)
 
 Acede à aplicação publicada e totalmente funcional através do seguinte link:
-👉 **[SOS Mulher no GitHub Pages](inserir link do gitpages)**
+👉 **[SOS Mulher no GitHub Pages](https://ellenrfs10.github.io/projetoFinalJS/)**
 **
 
 👉 Acede ao repositório aqui: https://github.com/ellenrfs10/projetoFinalJS.git
