@@ -13,6 +13,7 @@
 Acede à aplicação publicada e totalmente funcional através do seguinte link:
 👉 **[SOS Mulher no GitHub Pages](inserir link do gitpages)**
 **
+
 👉 Acede ao repositório aqui: https://github.com/ellenrfs10/projetoFinalJS.git
 
 ---
@@ -25,6 +26,7 @@ Acede à aplicação publicada e totalmente funcional através do seguinte link:
 - **Pesquisa Inteligente & Autocomplete:** Campo de busca com suporte a `<datalist>` dinâmico no cabeçalho, permitindo pesquisar centros de apoio por nome, tipo ou distrito em todo o país sem restrições de distância.
 - **Recursos Rápidos de Segurança:** Atalho para ligação de emergência (112), gravação de áudio em tempo real e partilha rápida de rota/localização.
 - **Guia de Estados:** Controlos de testes manuais para simular os diferentes estados da interface (*Idle*, *Locating*, *Sent*, *Error* e *No Coverage*).
+- **Obs Segunda Aba:** Apenas exibe os alertas junto com as notificações. As funcionalidades dinâmicas desta página serão desenvolvidas na segunda parte do projeto.
 
 ---
 
