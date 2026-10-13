@@ -2,7 +2,7 @@ import { renderState, switchTab, renderizarListaPontoApoio, preencherSugestoesBu
 import { getAlarmePreferencial, setAlarmePreferencial } from "./modules/storage.js";
 import { carregarCentrosApoio } from "./modules/api.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
-import { inicializarPainelAjudar } from "./modules/ajudar.js";
+import { inicializarPainelAjudar } from "./modules/help.js";
 import { acionarSOS } from "./modules/panic.js";
 import { getPosition, enriquecerCentrosComDistancia } from "./modules/geo.js";
 

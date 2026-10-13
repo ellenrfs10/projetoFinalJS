@@ -76,7 +76,52 @@
     "telefone": "222000005",
     "lat": 41.162140,
     "long": -8.657230
-  }
+  },
 
+ {
+    "id": 9,
+    "nome": "Gabinete de Apoio Jurídico - Barcelos",
+    "tipo": "Apoio Jurídico",
+    "distrito": "Barcelos",
+    "telefone": "239000001",
+    "lat": 41.528273,
+    "long": -8.622544
+},
+{
+    "id": 10,
+    "nome": "Gabinete de Apoio Jurídico - Guimarães",
+    "tipo": "Apoio Jurídico",
+    "distrito": "Guimarães",
+    "telefone": "239000002",
+    "lat": 41.4418,
+    "long": -8.2956
+},
+ {
+    "id": 11,
+    "nome": "Gabinete de Apoio Jurídico - Lisboa",
+    "tipo": "Apoio Jurídico",
+    "distrito": "Lisboa",
+    "telefone": "239000003",
+    "lat": 38.7223,
+    "long": -9.1393
+},
+{
+    "id": 12,
+    "nome": "Gabinete de Apoio Jurídico - Barcelinhos",
+    "tipo": "Apoio Jurídico",
+    "distrito": "Bacelos",
+    "telefone": "239000004",
+    "lat": 41.5243,
+    "long": -8.6199
+},
+{
+    "id": 13,
+    "nome": "Gabinete de Apoio Jurídico - Centro de Guimarães",
+    "tipo": "Apoio Jurídico",
+    "distrito": "Guimarães",
+    "telefone": "239000005",
+    "lat": 41.4438,
+    "long": -8.2957
+}
 
 ]

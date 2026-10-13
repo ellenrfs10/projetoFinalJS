@@ -2,7 +2,7 @@ import { getPosition, enriquecerCentrosComDistancia } from "./geo.js";
 import { tocarAlarme, pararAlarmeComClick, estaATocar } from "./audio.js";
 import { saveAlerts, getAlarmePreferencial, getClientId } from "./storage.js";
 import { renderState, renderizarListaPontoApoio, pontoApoioProximo } from "./ui.js";
-import { inicializarPainelAjudar } from "./ajudar.js";
+import { inicializarPainelAjudar } from "./help.js";
 
 let isSending = false;
 
