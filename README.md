@@ -12,7 +12,8 @@
 
 Acede à aplicação publicada e totalmente funcional através do seguinte link:
 👉 **[SOS Mulher no GitHub Pages](inserir link do gitpages)**
-*(Nota: Substitui o link acima pelo URL real do teu GitHub Pages)*
+**
+👉 Acede ao repositório aqui: https://github.com/ellenrfs10/projetoFinalJS.git
 
 ---
 
@@ -69,7 +70,7 @@ Por utilizar **Módulos ES6** (`import`/`export`) e requisições assíncronas `
 
 1. **Clonar o Repositório:**
    ```bash
-   git clone [https://github.com/teu-usuario/nome-do-repositorio.git](https://github.com/teu-usuario/nome-do-repositorio.git)
+   git clone [[https://github.com/teu-usuario/nome-do-repositorio.git](https://github.com/ellenrfs10/projetoFinalJS.git)](https://github.com/ellenrfs10/projetoFinalJS.)
 
 ## 🧪 Como Testar as Funcionalidades
 Assim que a aplicação abrir no navegador, podes testar os diferentes módulos e requisitos implementados:
