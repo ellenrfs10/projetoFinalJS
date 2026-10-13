@@ -23,12 +23,8 @@ export function getPosition(timeout = 10000) {
     });
 }
 
-/**
- * Calcula a distância em quilómetros entre duas coordenadas (Latitude/Longitude)
- * utilizando a Fórmula de Haversine.
- */
 export function calcularDistanciaKm(latUtilizador, lonUtilizador, latCentroApoio, lonCentroApoio) {
-    const R = 6371; // Raio da Terra em km
+    const R = 6371;
     const dLat = (latCentroApoio - latUtilizador) * (Math.PI / 180);
     const dLon = (lonCentroApoio - lonUtilizador) * (Math.PI / 180);
 
@@ -43,4 +39,11 @@ export function calcularDistanciaKm(latUtilizador, lonUtilizador, latCentroApoio
     const distancia = R * c;
 
     return Number(distancia.toFixed(1));
+}
+
+export function enriquecerCentrosComDistancia(centros, posUtilizador) {
+    return centros.map((centro) => ({
+        ...centro,
+        distanciaKm: calcularDistanciaKm(posUtilizador.lat, posUtilizador.lng, centro.lat, centro.long)
+    }));
 }

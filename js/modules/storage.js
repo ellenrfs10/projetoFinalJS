@@ -1,13 +1,22 @@
 const CHAVE = "sosmulher:pedidos";
 const CHAVE_ALARME = "sosmulher:alarme_ativo";
+const CHAVE_CLIENT_ID = "sosmulher:client_id";
 const MAX_PEDIDOS = 20;
+
+export function getClientId() {
+    let id = localStorage.getItem(CHAVE_CLIENT_ID);
+    if (!id) {
+        id = `device-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        localStorage.setItem(CHAVE_CLIENT_ID, id);
+    }
+    return id;
+}
 
 export function loadAlerts() {
     try {
         const dados = JSON.parse(localStorage.getItem(CHAVE));
         if (!Array.isArray(dados)) return [];
 
-        // Remove duplicados garantindo conversão segura da chave de ID para string
         const unicos = Array.from(
             new Map(dados.map(item => [String(item.id), item])).values()
         );
@@ -28,16 +37,19 @@ function persist(pedidos) {
 
 export function saveAlerts(pedido) {
     const atuais = loadAlerts();
+    const agora = Date.now();
 
-    // Garante que o pedido tem um ID único infalível (caso venha sem ID ou repetido)
+    // Anti-spam: rejeita se houver um pedido do mesmo cliente nos últimos 5 segundos
+    const ultimoPedidoDoCliente = atuais.find(p => p.clientId === pedido.clientId);
+    if (ultimoPedidoDoCliente && (agora - new Date(ultimoPedidoDoCliente.criadoEm).getTime() < 5000)) {
+        return atuais;
+    }
+
     const novoPedidoComIdUnico = {
         ...pedido,
-        id: pedido.id || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        id: pedido.id || `${agora}-${Math.random().toString(36).substr(2, 9)}`
     };
-
-    // Adiciona sempre o novo pedido no topo da lista e limita ao máximo de 20
     const atualizados = [novoPedidoComIdUnico, ...atuais].slice(0, MAX_PEDIDOS);
-
     return persist(atualizados);
 }
 
@@ -51,14 +63,4 @@ export function getAlarmePreferencial() {
 
 export function setAlarmePreferencial(ativo) {
     localStorage.setItem(CHAVE_ALARME, ativo);
-}
-
-// Gestão do Raio de Distância (Padrão: 10km)
-export function getRaioPreferencial() {
-    const valor = localStorage.getItem(CHAVE_RAIO);
-    return valor !== null ? Number(valor) : 10;
-}
-
-export function setRaioPreferencial(raio) {
-    localStorage.setItem(CHAVE_RAIO, Number(raio));
 }

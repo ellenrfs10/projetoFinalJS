@@ -4,7 +4,7 @@ import { carregarCentrosApoio } from "./modules/api.js";
 import { gerirGravacaoAudio, partilharLocalizacao } from "./modules/recursos.js";
 import { inicializarPainelAjudar } from "./modules/ajudar.js";
 import { acionarSOS } from "./modules/panic.js";
-import { getPosition, calcularDistanciaKm } from "./modules/geo.js";
+import { getPosition, enriquecerCentrosComDistancia } from "./modules/geo.js";
 
 let centrosCarregados = [];
 
@@ -44,19 +44,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 6. Carrega os dados da API para o autocomplete e funcionamento geral
+    // 6. Carrega os dados da API
     centrosCarregados = await carregarCentrosApoio();
     preencherSugestoesBusca(centrosCarregados);
 
-    // 7. Calcula e preenche o card "Rede Protetora Disponível" logo no início
+    // 7. Calcula o card inicial com o raio fixo de 10km
     try {
         const pos = await getPosition();
         const infoRedeEl = document.querySelector("#rede-info");
         if (infoRedeEl && centrosCarregados.length > 0) {
-            const centrosComDistancia = centrosCarregados.map((c) => ({
-                ...c,
-                distanciaKm: calcularDistanciaKm(pos.lat, pos.lng, c.lat, c.long)
-            }));
+            const centrosComDistancia = enriquecerCentrosComDistancia(centrosCarregados, pos);
             pontoApoioProximo(centrosComDistancia, infoRedeEl, 10);
         }
     } catch (err) {
@@ -88,6 +85,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 9. Inicializa e preenche os alertas na Aba 2
+    // 9. Inicializa a Aba 2
     inicializarPainelAjudar();
 });
