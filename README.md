@@ -63,10 +63,35 @@ Por utilizar **Módulos ES6** (`import`/`export`) e requisições assíncronas `
 
 ### Pré-requisitos
 - Um navegador moderno (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).
-- Visual Studio Code (recomendado) ou um servidor HTTP simples.
+- Ter o Node.js instalado (opcional, mas recomendado) OU utilizar uma extensão de servidor local no seu editor (ex: Live Server no VS Code).
 
 ### Passo a Passo
 
 1. **Clonar o Repositório:**
    ```bash
    git clone [https://github.com/teu-usuario/nome-do-repositorio.git](https://github.com/teu-usuario/nome-do-repositorio.git)
+
+## 🧪 Como Testar as Funcionalidades
+Assim que a aplicação abrir no navegador, podes testar os diferentes módulos e requisitos implementados:
+
+**Carregamento de Dados (API Local):**
+
+Ao abrir a aplicação, verifica se os centros de apoio e as opções de pesquisa carregam automaticamente na interface (consumidos via fetch do dados.json).
+
+**Painel de Estado SOS e Alarme:**
+
+- Clica no botão principal "HELP" (SOS).
+
+- Verifica o fluxo reativo: passa pelo estado de obtenção de geolocalização, calcula a distância aos centros de apoio num raio de 10 km e ativa o alarme sonoro (caso esteja ativado nas preferências) e os efeitos visuais correspondentes.
+
+**Recursos de Áudio e Partilha:**
+
+- Testa a funcionalidade de gravação de áudio (requer permissão do microfone do navegador) e o botão de partilha de rota/localização.
+
+- Persistência de Dados (localStorage):
+
+- Cria um alerta ou altera as preferências de som, faz refresh à página (F5) e valida se o estado e os dados continuam guardados corretamente.
+
+**Pesquisa em Tempo Real e Abas:**
+
+Digita termos na barra de pesquisa para filtrar os centros de apoio instantaneamente e navega entre as diferentes abas da aplicação para testar a manipulação dinâmica do DOM.
