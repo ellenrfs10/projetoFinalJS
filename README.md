@@ -70,7 +70,7 @@ Por utilizar **Módulos ES6** (`import`/`export`) e requisições assíncronas `
 
 1. **Clonar o Repositório:**
    ```bash
-   git clone [[https://github.com/teu-usuario/nome-do-repositorio.git](https://github.com/ellenrfs10/projetoFinalJS.git)](https://github.com/ellenrfs10/projetoFinalJS.)
+   git clone https://github.com/ellenrfs10/projetoFinalJS.git
 
 ## 🧪 Como Testar as Funcionalidades
 Assim que a aplicação abrir no navegador, podes testar os diferentes módulos e requisitos implementados:
